@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:ricky_morti/blocs/cast_bloc.dart';
 import 'package:ricky_morti/blocs/cast_event.dart';
@@ -18,8 +19,13 @@ class AllCastScreen extends StatelessWidget {
       create: (context) => CastBloc(characterRepository)..add(FetchCharacters(1)),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('All Cast'),
-          backgroundColor: Colors.transparent,
+          title: Center(
+            child: SvgPicture.asset(
+              'assets/vectors/vector_105_x2.svg',
+              width: 150,
+            ),
+          ),
+          backgroundColor: Color(0xFF191D29),
           elevation: 0,
         ),
         body: BlocBuilder<CastBloc, CastState>(
