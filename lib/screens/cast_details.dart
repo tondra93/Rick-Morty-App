@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/character.dart';
 
 class CastDetailsScreen extends StatelessWidget {
@@ -14,7 +15,8 @@ class CastDetailsScreen extends StatelessWidget {
         title: Center(
           child: SvgPicture.asset(
             'assets/vectors/vector_105_x2.svg',
-            width: 150,
+            width: 200,
+            height: 50,
           ),
         ),
         backgroundColor: Color(0xFF191D29),
@@ -31,9 +33,11 @@ class CastDetailsScreen extends StatelessWidget {
               Center(
                 child: Text(
                   character.name,
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                  style: GoogleFonts.getFont(
+                    'Plus Jakarta Sans',
+                    fontSize: 22,
+                    height: 1.3,
+                    fontWeight: FontWeight.w600,
                     color: Color(0xFF13D9E5), // Change text color to the specified color
                   ),
                 ),
@@ -63,10 +67,11 @@ class CastDetailsScreen extends StatelessWidget {
               SizedBox(height: 20),
               Text(
                 'Episodes',
-                style: TextStyle(
+                style: GoogleFonts.getFont(
+                  'Roboto Condensed',
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white, // Change text color to white for visibility
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFFFFFFFF), // Change text color to white for visibility
                 ),
               ),
               SizedBox(height: 10),
