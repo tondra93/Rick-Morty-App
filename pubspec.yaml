@@ -69,6 +69,8 @@ flutter:
     - assets/vectors/group_1_x2.svg
     - assets/images/rick_and_morty_310131.png
     - assets/vectors/vector_105_x2.svg
+    - assets/images/texture.jpeg
+    - assets/vectors/vector_105_x2.svg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
