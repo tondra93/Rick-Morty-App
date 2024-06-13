@@ -1,4 +1,3 @@
-// lib/screens/all_cast_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -20,20 +19,26 @@ class AllCastScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('All Cast'),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
         ),
         body: BlocBuilder<CastBloc, CastState>(
           builder: (context, state) {
             if (state is CastLoading) {
               return Center(child: CircularProgressIndicator());
             } else if (state is CastLoaded) {
-              return ListView.builder(
+              return GridView.builder(
+                padding: EdgeInsets.all(10.0),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10.0,
+                  mainAxisSpacing: 10.0,
+                  childAspectRatio: 0.8,
+                ),
                 itemCount: state.characters.length,
                 itemBuilder: (context, index) {
                   final character = state.characters[index];
-                  return ListTile(
-                    leading: Image.network(character.image),
-                    title: Text(character.name),
-                    subtitle: Text(character.species),
+                  return GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
@@ -42,6 +47,38 @@ class AllCastScreen extends StatelessWidget {
                         ),
                       );
                     },
+                    child: Card(
+                      color: Colors.transparent,
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              character.image,
+                              height: 140,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              character.name,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   );
                 },
               );
@@ -52,6 +89,25 @@ class AllCastScreen extends StatelessWidget {
             }
           },
         ),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.black,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home, color: Colors.white),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person, color: Colors.white),
+              label: 'Cast',
+            ),
+          ],
+          selectedItemColor: Colors.green,
+          unselectedItemColor: Colors.white,
+          onTap: (index) {
+            // Handle navigation here
+          },
+        ),
+        backgroundColor: Colors.black, // Adjust background color if necessary
       ),
     );
   }
