@@ -1,30 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:ui';
-class SplashScreen extends StatelessWidget {
+import 'package:ricky_morti/screens/all_cast_screen.dart';
+
+
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Set the duration for the splash screen and navigate to the next screen
+    Future.delayed(const Duration(seconds: 5), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) =>  AllCastScreen()), // Replace `NextScreen` with your target screen
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color(0xFF9DFE00),
       ),
       child: Stack(
         children: [
-            Positioned(
-              right: -258,
-              top: -258,
-              child: SizedBox(
-                width: 932,
-                height: 932,
-                child: SvgPicture.network(
-                  'assets/vectors/group_1_x2.svg',
-                ),
+          Positioned(
+            right: -258,
+            top: -258,
+            child: SizedBox(
+              width: 932,
+              height: 932,
+              child: SvgPicture.asset(
+                'assets/vectors/group_1_x2.svg', // Changed to SvgPicture.asset for local asset
               ),
             ),
-      SizedBox(
+          ),
+          SizedBox(
             width: double.infinity,
             child: Container(
               padding: const EdgeInsets.fromLTRB(7, 250, 7, 24),
@@ -40,7 +60,6 @@ class SplashScreen extends StatelessWidget {
                           fit: BoxFit.cover,
                           image: AssetImage(
                             'assets/images/rick_and_morty_310131.png',
-                            
                           ),
                         ),
                       ),
@@ -74,8 +93,7 @@ class SplashScreen extends StatelessWidget {
                               width: 33,
                               height: 33,
                               padding: const EdgeInsets.fromLTRB(13.8, 27.5, 13.7, 0),
-                              child: 
-                              Container(
+                              child: Container(
                                 decoration: BoxDecoration(
                                   color: const Color(0xFF191D29),
                                   borderRadius: BorderRadius.circular(2.8),
@@ -110,3 +128,5 @@ class SplashScreen extends StatelessWidget {
     );
   }
 }
+
+
