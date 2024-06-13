@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 abstract class CastEvent extends Equatable {
   const CastEvent();
-
+  
   @override
   List<Object> get props => [];
 }
