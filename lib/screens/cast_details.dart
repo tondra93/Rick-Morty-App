@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../models/character.dart';
 
 class CastDetailsScreen extends StatelessWidget {
   final Character character;
 
-  const CastDetailsScreen({required this.character});
+  static const IconData arrow_back_ios_outlined = IconData(0xee84, fontFamily: 'MaterialIcons', matchTextDirection: true);
+
+  const CastDetailsScreen({super.key, required this.character});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(arrow_back_ios_outlined, color: Colors.white),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -48,21 +51,38 @@ class CastDetailsScreen extends StatelessWidget {
               SizedBox(height: 20),
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  character.image,
+                child: CachedNetworkImage(
+                  imageUrl: character.image,
                   height: 200,
                   width: 200,
                   fit: BoxFit.cover,
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
               ),
               SizedBox(height: 20),
-              _buildDetailCard(Icons.favorite, 'Status', character.status),
-              _buildDetailCard(Icons.person, 'Species', character.species),
-              _buildDetailCard(Icons.transgender, 'Gender', character.gender),
-              _buildDetailCard(Icons.public, 'Origin', character.origin.name),
-              _buildDetailCard(Icons.location_on, 'Last Known Location', character.location.name),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(
+                    child: _buildDetailCard(Icons.favorite, 'Status', character.status),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: _buildDetailCard(Icons.android, 'Species', character.species),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: _buildDetailCard(Icons.male, 'Gender', character.gender),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              _buildWideDetailCard(Icons.public, 'Origin', character.origin.name),
+              SizedBox(height: 10),
+              _buildWideDetailCard(Icons.pin_drop, 'Last Known Location', character.location.name),
               SizedBox(height: 20),
-              _buildEpisodesCard(character.episode),
+              _buildWideEpisodesCard(character.episode),
             ],
           ),
         ),
@@ -90,51 +110,110 @@ class CastDetailsScreen extends StatelessWidget {
     return Card(
       color: Color(0xFF1E2430),
       margin: EdgeInsets.symmetric(vertical: 10),
-      child: ListTile(
-        leading: Icon(icon, color: Colors.green),
-        title: Text(
-          label,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: [
+            Icon(icon, color: Colors.green),
+            SizedBox(height: 5),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(height: 3),
+            Text(
+              value,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
-        subtitle: Text(
-          value,
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.white,
+      ),
+    );
+  }
+
+  Widget _buildWideDetailCard(IconData icon, String label, String value) {
+    return Container(
+      width: double.infinity,
+      child: Card(
+        color: Color(0xFF1E2430),
+        margin: EdgeInsets.symmetric(vertical: 5),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(icon, color: Colors.green),
+              SizedBox(height: 5),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: 5),
+              Text(
+                value,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white,
+                ),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget _buildEpisodesCard(List<Episode> episodes) {
-    return Card(
-      color: Color(0xFF1E2430),
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Episodes',
-              style: GoogleFonts.getFont(
-                'Roboto Condensed',
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
+  Widget _buildWideEpisodesCard(List<Episode> episodes) {
+    return Container(
+      width: double.infinity,
+      child: Card(
+        color: Color(0xFF1E2430),
+        margin: EdgeInsets.symmetric(vertical: 10),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Episodes',
+                style: GoogleFonts.getFont(
+                  'Roboto Condensed',
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            ...episodes.map((e) => Text(
-              e.name,
-              style: TextStyle(color: Colors.white),
-            )).toList(),
-          ],
+              SizedBox(height: 10),
+              ...episodes.map((e) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2.0),
+                child: Text(
+                  e.name,
+                  style: TextStyle(color: Colors.white),
+                ),
+              )).toList(),
+            ],
+          ),
         ),
       ),
     );
