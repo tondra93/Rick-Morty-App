@@ -16,11 +16,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Set the duration for the splash screen and navigate to the next screen
     Future.delayed(const Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>  AllCastScreen()), // Replace `NextScreen` with your target screen
+        MaterialPageRoute(builder: (context) =>  AllCastScreen()), 
       );
     });
   }
@@ -40,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
               width: 932,
               height: 932,
               child: SvgPicture.asset(
-                'assets/vectors/group_1_x2.svg', // Changed to SvgPicture.asset for local asset
+                'assets/vectors/group_1_x2.svg', 
               ),
             ),
           ),

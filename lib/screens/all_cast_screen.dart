@@ -129,11 +129,8 @@ class AllCastScreen extends StatelessWidget {
           ],
           selectedItemColor: Colors.green,
           unselectedItemColor: Colors.white,
-          onTap: (index) {
-            // Handle navigation here
-          },
         ),
-        backgroundColor: Color(0xFF191D29), // Adjust background color if necessary
+        backgroundColor: Color(0xFF191D29), 
       ),
     );
   }

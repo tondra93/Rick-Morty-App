@@ -43,7 +43,7 @@ class CharacterRepository {
     }
 
     final List charactersJson = result.data!['characters']['results'];
-    print('Fetched characters: ${charactersJson.length}'); // Debug statement
+    print('Fetched characters: ${charactersJson.length}'); 
     return charactersJson.map((json) => Character.fromJson(json)).toList();
   }
 }

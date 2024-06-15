@@ -12,79 +12,63 @@ class CastDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: SvgPicture.asset(
-            'assets/vectors/vector_105_x2.svg',
-            width: 200,
-            height: 50,
-          ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
+        title: SvgPicture.asset(
+          'assets/vectors/vector_105_x2.svg',
+          width: 200,
+          height: 50,
+        ),
+        centerTitle: true,
         backgroundColor: Color(0xFF191D29),
         elevation: 0,
       ),
       body: Container(
-        color: Color(0xFF191D29), // Set the background color
+        color: Color(0xFF191D29),
         child: SingleChildScrollView(
           padding: EdgeInsets.all(16),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 20),
-              Center(
-                child: Text(
-                  character.name,
-                  style: GoogleFonts.getFont(
-                    'Plus Jakarta Sans',
-                    fontSize: 22,
-                    height: 1.3,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF13D9E5), // Change text color to the specified color
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              Center(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.network(
-                    character.image,
-                    height: 200,
-                    width: 200,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              _buildDetailRow(Icons.favorite, 'Status', character.status),
-              SizedBox(height: 10),
-              _buildDetailRow(Icons.person, 'Species', character.species),
-              SizedBox(height: 10),
-              _buildDetailRow(Icons.transgender, 'Gender', character.gender),
-              SizedBox(height: 20),
-              _buildDetailRow(Icons.public, 'Origin', character.origin.name),
-              SizedBox(height: 10),
-              _buildDetailRow(Icons.location_on, 'Last Known Location', character.location.name),
-              SizedBox(height: 20),
               Text(
-                'Episodes',
+                character.name,
                 style: GoogleFonts.getFont(
-                  'Roboto Condensed',
-                  fontSize: 20,
+                  'Plus Jakarta Sans',
+                  fontSize: 22,
+                  height: 1.3,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFFFFFFFF), // Change text color to white for visibility
+                  color: Color(0xFF13D9E5),
                 ),
               ),
-              SizedBox(height: 10),
-              ...character.episode.map((e) => Text(
-                e.name,
-                style: TextStyle(color: Colors.white), // Change text color to white for visibility
-              )).toList(),
+              SizedBox(height: 20),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  character.image,
+                  height: 200,
+                  width: 200,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(height: 20),
+              _buildDetailCard(Icons.favorite, 'Status', character.status),
+              _buildDetailCard(Icons.person, 'Species', character.species),
+              _buildDetailCard(Icons.transgender, 'Gender', character.gender),
+              _buildDetailCard(Icons.public, 'Origin', character.origin.name),
+              _buildDetailCard(Icons.location_on, 'Last Known Location', character.location.name),
+              SizedBox(height: 20),
+              _buildEpisodesCard(character.episode),
             ],
           ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color(0xFF191D29), // Set background color for BottomNavigationBar
+        backgroundColor: Color(0xFF191D29),
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -95,41 +79,64 @@ class CastDetailsScreen extends StatelessWidget {
             label: 'Cast',
           ),
         ],
-        currentIndex: 1, // set to the second tab
-        onTap: (index) {
-          // Handle navigation based on the selected tab
-        },
-        selectedItemColor: Colors.green, // Set selected item color
-        unselectedItemColor: Colors.white, // Set unselected item color
+        currentIndex: 1,
+        selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.white,
       ),
     );
   }
 
-  Widget _buildDetailRow(IconData icon, String label, String value) {
-    return Row(
-      children: [
-        Icon(icon, color: Colors.green),
-        SizedBox(width: 10),
-        Text(
+  Widget _buildDetailCard(IconData icon, String label, String value) {
+    return Card(
+      color: Color(0xFF1E2430),
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: ListTile(
+        leading: Icon(icon, color: Colors.green),
+        title: Text(
           label,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Colors.white, // Change text color to white for visibility
+            color: Colors.white,
           ),
         ),
-        SizedBox(width: 10),
-        Expanded(
-          child: Text(
-            value,
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.white, // Change text color to white for visibility
+        subtitle: Text(
+          value,
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEpisodesCard(List<Episode> episodes) {
+    return Card(
+      color: Color(0xFF1E2430),
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Episodes',
+              style: GoogleFonts.getFont(
+                'Roboto Condensed',
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
             ),
-            overflow: TextOverflow.ellipsis,
-          ),
+            SizedBox(height: 10),
+            ...episodes.map((e) => Text(
+              e.name,
+              style: TextStyle(color: Colors.white),
+            )).toList(),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
