@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../models/character.dart';
@@ -22,7 +22,7 @@ class CastDetailsScreen extends StatelessWidget {
           },
         ),
         title: SvgPicture.asset(
-          'assets/vectors/vector_105_x2.svg',
+          'assets/vectors/rick_and_morti.svg',
           width: 200,
           height: 50,
         ),
@@ -65,24 +65,24 @@ class CastDetailsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Expanded(
-                    child: _buildDetailCard(Icons.favorite, 'Status', character.status),
+                    child: _buildDetailCard('assets/vectors/status.svg', 'Status', character.status),
                   ),
                   SizedBox(width: 10),
                   Expanded(
-                    child: _buildDetailCard(Icons.android, 'Species', character.species),
+                    child: _buildDetailCard('assets/vectors/species.svg', 'Species', character.species),
                   ),
                   SizedBox(width: 10),
                   Expanded(
-                    child: _buildDetailCard(Icons.male, 'Gender', character.gender),
+                    child: _buildDetailCard('assets/vectors/gender.svg', 'Gender', character.gender),
                   ),
                 ],
               ),
               SizedBox(height: 10),
-              _buildWideDetailCard(Icons.public, 'Origin', character.origin.name),
+              _buildWideDetailCard('assets/vectors/origin.svg', 'Origin', character.origin.name),
               SizedBox(height: 10),
-              _buildWideDetailCard(Icons.pin_drop, 'Last Known Location', character.location.name),
+              _buildWideDetailCard('assets/vectors/location.svg', 'Last Known Location', character.location.name),
               SizedBox(height: 20),
-              _buildWideEpisodesCard(character.episode),
+              _buildWideEpisodesCard('assets/vectors/episode.svg', character.episode),
             ],
           ),
         ),
@@ -106,7 +106,7 @@ class CastDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailCard(IconData icon, String label, String value) {
+  Widget _buildDetailCard(String svgPath, String label, String value) {
     return Card(
       color: Color(0xFF1E2430),
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -117,7 +117,7 @@ class CastDetailsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            Icon(icon, color: Colors.green),
+            SvgPicture.asset(svgPath, color: Colors.green, height: 24, width: 24),
             SizedBox(height: 5),
             Text(
               label,
@@ -142,7 +142,7 @@ class CastDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildWideDetailCard(IconData icon, String label, String value) {
+  Widget _buildWideDetailCard(String svgPath, String label, String value) {
     return Container(
       width: double.infinity,
       child: Card(
@@ -156,7 +156,7 @@ class CastDetailsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(icon, color: Colors.green),
+              SvgPicture.asset(svgPath, color: Colors.green, height: 24, width: 24),
               SizedBox(height: 5),
               Text(
                 label,
@@ -181,7 +181,9 @@ class CastDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildWideEpisodesCard(List<Episode> episodes) {
+  Widget _buildWideEpisodesCard(String svgPath, List<Episode> episodes) {
+    String title = episodes.length == 1 ? 'Episode' : 'Episodes';
+    
     return Container(
       width: double.infinity,
       child: Card(
@@ -195,8 +197,10 @@ class CastDetailsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SvgPicture.asset(svgPath, color: Colors.green, height: 24, width: 24),
+              SizedBox(height: 5),
               Text(
-                'Episodes',
+                title,
                 style: GoogleFonts.getFont(
                   'Roboto Condensed',
                   fontSize: 20,

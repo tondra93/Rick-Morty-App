@@ -21,7 +21,7 @@ class AllCastScreen extends StatelessWidget {
         appBar: AppBar(
           title: Center(
             child: SvgPicture.asset(
-              'assets/vectors/vector_105_x2.svg',
+              'assets/vectors/rick_and_morti.svg',
               width: 150,
             ),
           ),

@@ -41,12 +41,16 @@ dependencies:
   equatable: ^2.0.5
   flutter_bloc: ^8.1.6
   cached_network_image: ^3.3.1
+  flutter_launcher_icons: ^0.13.1
  
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+flutter_icons:
+  android: true
+  ios: true 
+  image_path: "assets/images/rick_and_morty_310131.png"
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -69,7 +73,13 @@ flutter:
   assets:
     - assets/vectors/group_1_x2.svg
     - assets/images/rick_and_morty_310131.png
-    - assets/vectors/vector_105_x2.svg
+    - assets/vectors/status.svg
+    - assets/vectors/species.svg
+    - assets/vectors/gender.svg
+    - assets/vectors/origin.svg
+    - assets/vectors/location.svg
+    - assets/vectors/episode.svg
+    - assets/vectors/rick_and_morti.svg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
