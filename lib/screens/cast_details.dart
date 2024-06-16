@@ -117,7 +117,7 @@ class CastDetailsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            SvgPicture.asset(svgPath, color: Colors.green, height: 24, width: 24),
+            SvgPicture.asset(svgPath, height: 24, width: 24),
             SizedBox(height: 5),
             Text(
               label,
@@ -156,7 +156,7 @@ class CastDetailsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SvgPicture.asset(svgPath, color: Colors.green, height: 24, width: 24),
+              SvgPicture.asset(svgPath, height: 24, width: 24),
               SizedBox(height: 5),
               Text(
                 label,
@@ -197,7 +197,7 @@ class CastDetailsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SvgPicture.asset(svgPath, color: Colors.green, height: 24, width: 24),
+              SvgPicture.asset(svgPath, height: 24, width: 24),
               SizedBox(height: 5),
               Text(
                 title,
